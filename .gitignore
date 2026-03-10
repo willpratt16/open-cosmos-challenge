@@ -1,3 +1,6 @@
 # Ignore simulation outputs but keep the results folder tracked
 results/*
 !results/.gitkeep
+
+# macOS system files
+.DS_Store

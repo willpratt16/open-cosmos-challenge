@@ -58,8 +58,8 @@ open-cosmos-challenge/
 
 **1. Clone the repository:**
 ```bash
-git clone 
-cd coding_challenge
+git clone https://github.com/willpratt16/open-cosmos-challenge.git
+cd open-cosmos-challenge
 ```
 
 **2. Build the Docker image:**

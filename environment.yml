@@ -1,0 +1,10 @@
+name: simulation-env
+channels:
+  - conda-forge
+channel_priority: strict
+dependencies:
+  - python=3.11
+  - openjdk
+  - orekit
+  - numpy
+  - matplotlib

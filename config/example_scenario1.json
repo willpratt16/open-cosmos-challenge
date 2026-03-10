@@ -1,0 +1,57 @@
+{
+    "ScenarioName": "Lunar Eclipse Example Scenario",
+    "Spacecrafts": [
+        {
+            "Id": "SC1",
+            "Name": "Spacecraft 1",
+            "Hardware": {   
+                "Type": "SolarPanel",
+                "PanelArea": 1.5,
+                "PanelEfficiency": 0.3,
+                "BatteryCapacity": 1000000.0,
+                "InitialBatteryEnergy": 500000.0,
+                "PowerConsumption": 100.0
+            },
+            "Orbit": {
+                "sma": 7191938.817629013,
+                "ecc": 0.05,
+                "inc": 23.44,
+                "raan": 0.0,
+                "aop": 0.0,
+                "true_anomaly": 0.0
+            }
+        },
+        {
+            "Id": "SC2",
+            "Name": "Spacecraft 2",
+            "Hardware": {   
+                "Type": "SolarPanel",
+                "PanelArea": 1.7,
+                "PanelEfficiency": 0.3,
+                "BatteryCapacity": 1000000.0,
+                "InitialBatteryEnergy": 500000.0,
+                "PowerConsumption": 150.0
+            },
+            "Orbit": {
+                "sma": 7191938.817629013,
+                "ecc": 0.05,
+                "inc": 23.44,
+                "raan": 0.0,
+                "aop": 0.0,
+                "true_anomaly": 100.0
+            }
+        }
+    ],
+
+    "StartEpoch": {
+        "Year": 2030,
+        "Month": 6,
+        "Day": 1,
+        "Hour": 0,
+        "Minute": 0,
+        "Second": 0.0
+     },
+
+    "DurationSeconds": 43200.0
+
+}

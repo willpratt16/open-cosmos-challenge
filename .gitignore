@@ -1,0 +1,3 @@
+# Ignore simulation outputs but keep the results folder tracked
+results/*
+!results/.gitkeep

@@ -1,0 +1,117 @@
+{
+    "ScenarioName": "Multi-Satellite Example Scenario",
+    "Spacecrafts": [
+        {
+            "Id": "SC1",
+            "Name": "Satellite 1",
+            "Hardware": {   
+                "Type": "SolarPanel",
+                "PanelArea": 1.5,
+                "PanelEfficiency": 0.3,
+                "BatteryCapacity": 1000000.0,
+                "InitialBatteryEnergy": 500000.0,
+                "PowerConsumption": 100.0
+            },
+            "Orbit": {
+                "sma": 7210000.0,
+                "ecc": 0.05,
+                "inc": 35.50,
+                "raan": 20.0,
+                "aop": 0.0,
+                "true_anomaly": 0.0
+            }
+        },
+        {
+            "Id": "SC2",
+            "Name": "Satellite 2",
+            "Hardware": {   
+                "Type": "SolarPanel",
+                "PanelArea": 1.7,
+                "PanelEfficiency": 0.3,
+                "BatteryCapacity": 1000000.0,
+                "InitialBatteryEnergy": 500000.0,
+                "PowerConsumption": 150.0
+            },
+            "Orbit": {
+                "sma": 7191938.817629013,
+                "ecc": 0.02,
+                "inc": 86.50,
+                "raan": 0.0,
+                "aop": 0.0,
+                "true_anomaly": 100.0
+            }
+        },
+        {
+            "Id": "SC3",
+            "Name": "Satellite 3",
+            "Hardware": {   
+                "Type": "SolarPanel",
+                "PanelArea": 1.0,
+                "PanelEfficiency": 0.3,
+                "BatteryCapacity": 1000000.0,
+                "InitialBatteryEnergy": 500000.0,
+                "PowerConsumption": 90.0
+            },
+            "Orbit": {
+                "sma": 6990000.0,
+                "ecc": 0.20,
+                "inc": 60.50,
+                "raan": 10.0,
+                "aop": 10.0,
+                "true_anomaly": 65.0
+            }
+        },
+        {
+            "Id": "SC4",
+            "Name": "Satellite 4",
+            "Hardware": {   
+                "Type": "SolarPanel",
+                "PanelArea": 1.2,
+                "PanelEfficiency": 0.3,
+                "BatteryCapacity": 1000000.0,
+                "InitialBatteryEnergy": 500000.0,
+                "PowerConsumption": 100.0
+            },
+            "Orbit": {
+                "sma": 7000000.0,
+                "ecc": 0.00,
+                "inc": 25.40,
+                "raan": 10.0,
+                "aop": 20.0,
+                "true_anomaly": 15.0
+            }
+        },
+        {
+            "Id": "SC5",
+            "Name": "Satellite 5",
+            "Hardware": {   
+                "Type": "SolarPanel",
+                "PanelArea": 2.2,
+                "PanelEfficiency": 0.3,
+                "BatteryCapacity": 1000000.0,
+                "InitialBatteryEnergy": 500000.0,
+                "PowerConsumption": 200.0
+            },
+            "Orbit": {
+                "sma": 7191000.0,
+                "ecc": 0.07,
+                "inc": 12.20,
+                "raan": 50.0,
+                "aop": 25.0,
+                "true_anomaly": 30.0
+            }
+        }
+    ],
+
+    "StartEpoch": {
+        "Year": 2026,
+        "Month": 3,
+        "Day": 5,
+        "Hour": 12,
+        "Minute": 30,
+        "Second": 0.0
+     },
+
+    "DurationSeconds": 86400.0
+
+}

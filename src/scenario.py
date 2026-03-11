@@ -12,75 +12,124 @@ from math import radians
 import matplotlib.pyplot as plt
 import json
 import os
+import logging
 
 from org.orekit.time import AbsoluteDate, TimeScalesFactory
 
 utc = TimeScalesFactory.getUTC() # Get the UTC time scale
 BASE_RESULTS_DIR = Path(os.environ.get("OUTPUT_DIR", "/results"))
+logger = logging.getLogger(__name__)
 
 class Scenario:
-    def __init__(self, config_path: str):
+    def __init__(self, config_path: str):  
 
-        with open(config_path, "r") as f:
-            config = json.load(f)
+        try:
+            with open(config_path, "r") as f:
+                config = json.load(f)
+
+        except json.JSONDecodeError as e:
+            logger.error("Invalid JSON format in config file")
+            raise ValueError("Config file is not valid JSON") from e
+
+        self.validate_config(config)
+        self.initialise_scenario(config)
+
+    def validate_config(self, config):
+
+        required_fields = [
+            "ScenarioName",
+            "Spacecrafts",
+            "StartEpoch",
+            "DurationSeconds"
+        ]
+
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required config field: {field}")
+
+        if config["DurationSeconds"] <= 0:
+            raise ValueError("DurationSeconds must be positive")
+
+        logger.info(f"Config validated.")
+
+        
+
+    def initialise_scenario(self, config):
 
         self.scenario_name = config["ScenarioName"]
 
         self.spacecrafts = []
 
-        for spacecraft in config["Spacecrafts"]:
+        try: 
+            for spacecraft in config["Spacecrafts"]:
 
-            sc_hardware = Hardware.SolarPanel(
-                panel_area=spacecraft["Hardware"]["PanelArea"],
-                panel_efficiency=spacecraft["Hardware"]["PanelEfficiency"],
-                battery_capacity=spacecraft["Hardware"]["BatteryCapacity"],
-                initial_battery_energy=spacecraft["Hardware"]["InitialBatteryEnergy"],
-                power_consumption=spacecraft["Hardware"]["PowerConsumption"]
-            )
-            orbital_elements = OrbitalElements(
-                sma=spacecraft["Orbit"]["sma"],
-                ecc=spacecraft["Orbit"]["ecc"],
-                inc=radians(spacecraft["Orbit"]["inc"]),
-                raan=radians(spacecraft["Orbit"]["raan"]),
-                aop=radians(spacecraft["Orbit"]["aop"]),
-                true_anomaly=radians(spacecraft["Orbit"]["true_anomaly"])
-            )
-            self.spacecrafts.append(
-                Spacecraft(
-                    id=spacecraft["Id"],
-                    name=spacecraft["Name"],
-                    orbital_elements=orbital_elements,
-                    hardware=sc_hardware
+                sc_hardware = Hardware.SolarPanel(
+                    panel_area=spacecraft["Hardware"]["PanelArea"],
+                    panel_efficiency=spacecraft["Hardware"]["PanelEfficiency"],
+                    battery_capacity=spacecraft["Hardware"]["BatteryCapacity"],
+                    initial_battery_energy=spacecraft["Hardware"]["InitialBatteryEnergy"],
+                    power_consumption=spacecraft["Hardware"]["PowerConsumption"]
                 )
+                orbital_elements = OrbitalElements(
+                    sma=spacecraft["Orbit"]["sma"],
+                    ecc=spacecraft["Orbit"]["ecc"],
+                    inc=radians(spacecraft["Orbit"]["inc"]),
+                    raan=radians(spacecraft["Orbit"]["raan"]),
+                    aop=radians(spacecraft["Orbit"]["aop"]),
+                    true_anomaly=radians(spacecraft["Orbit"]["true_anomaly"])
+                )
+                self.spacecrafts.append(
+                    Spacecraft(
+                        id=spacecraft["Id"],
+                        name=spacecraft["Name"],
+                        orbital_elements=orbital_elements,
+                        hardware=sc_hardware
+                    )
+                )
+        except Exception as e:
+            raise ValueError(f"Spacecraft config is missing required field: {e}") from e
+
+        try:
+            self.starting_epoch = AbsoluteDate(
+                config["StartEpoch"]["Year"],
+                config["StartEpoch"]["Month"],
+                config["StartEpoch"]["Day"],
+                config["StartEpoch"]["Hour"],
+                config["StartEpoch"]["Minute"],
+                config["StartEpoch"]["Second"],
+                utc
             )
+        except Exception as e:
+            raise ValueError(f"StartEpoch config is missing required field: {e}") from e
+        
+        try:
+            self.scenario_duration = config["DurationSeconds"]
+        except Exception as e:
+            raise ValueError(f"DurationSeconds config is missing required field: {e}") from e
 
-        self.starting_epoch = AbsoluteDate(
-            config["StartEpoch"]["Year"],
-            config["StartEpoch"]["Month"],
-            config["StartEpoch"]["Day"],
-            config["StartEpoch"]["Hour"],
-            config["StartEpoch"]["Minute"],
-            config["StartEpoch"]["Second"],
-            utc
-        )
-        self.scenario_duration = config["DurationSeconds"]
+        logger.info(f"Scenario '{self.scenario_name}' initialised with {len(self.spacecrafts)} spacecraft(s).")
 
-        print(f"Scenario '{self.scenario_name}' initialized with {len(self.spacecrafts)} spacecraft(s).")
 
     def propagate_scenario(self):
 
+        logger.info("Starting scenario propagation")
+
         self.results = {}
 
-        for spacecraft in self.spacecrafts:
-            print(f"Propagating {spacecraft.id}...")
-            propagation = Propagation(spacecraft, self.starting_epoch, self.scenario_duration)
-            self.results[spacecraft.id] = propagation.propagate()
+        try:
+            for spacecraft in self.spacecrafts:
+                logger.info(f"Propagating {spacecraft.id}...")
+                propagation = Propagation(spacecraft, self.starting_epoch, self.scenario_duration)
+                self.results[spacecraft.id] = propagation.propagate()
+        except Exception:
+            logger.exception(f"Error during scenario propagation.")
+            raise
         
-        print("Scenario propagation complete.")
+        logger.info("Scenario propagation complete.")
 
     def create_output_reports(self):
 
-        print("Creating output reports...")
+        logger.info("Creating output reports.")
 
         for sc_id in self.results.keys():
 

@@ -21,7 +21,6 @@ def main():
 
     except IndexError:
         logger.error("No config file provided")
-        print("Usage: python main.py <config_file>")
         sys.exit(1)
 
     config_path = Path("/app/config") / config_file

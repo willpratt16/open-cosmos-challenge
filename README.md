@@ -97,7 +97,7 @@ results/
 └── example_scenario1/
     ├── Simulation_Plots.png        # Solar panel illumination & battery energy charts
     └── spacecraft_1/
-        ├── Output_Report.txt       # Time-series: elapsed time, illumination fraction, battery energy
+        ├── Output_Report.txt       # Time-series: elapsed time, illumination fraction, power output, battery energy
         └── Eclipse_Report.txt      # Eclipse intervals: start and stop times
 ```
 
@@ -106,6 +106,7 @@ results/
 |---|---|
 | `time_s` | Elapsed simulation time (seconds) |
 | `illumination_fraction` | Fraction of solar panel area illuminated (0–1) |
+| `power_output_W` | Solar Panel Power Output (Watts) |
 | `battery_energy_J` | Battery energy level (Joules) |
 
 ### Eclipse_Report.txt
@@ -117,7 +118,7 @@ results/
 
 ### Simulation_Plots.png
 A two-panel chart showing:
-- **Top:** Solar panel illuminated fraction over time, with eclipse periods shaded
+- **Top:** Solar panel power output over time, with eclipse periods shaded
 - **Bottom:** Battery energy over time
 
 ---

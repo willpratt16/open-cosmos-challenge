@@ -94,11 +94,12 @@ Results are written to `results/<scenario_name>/` and organised by spacecraft ID
 
 ```
 results/
+├── simulation.log               # Logging file to log simulation progress and errors
 └── example_scenario1/
-    ├── Simulation_Plots.png        # Solar panel illumination & battery energy charts
+    ├── Simulation_Plots.png     # Solar panel illumination & battery energy charts
     └── spacecraft_1/
-        ├── Output_Report.txt       # Time-series: elapsed time, illumination fraction, power output, battery energy
-        └── Eclipse_Report.txt      # Eclipse intervals: start and stop times
+        ├── Output_Report.txt    # Time-series: elapsed time, illumination fraction, power output, battery energy
+        └── Eclipse_Report.txt   # Eclipse intervals: start and stop times
 ```
 
 ### Output_Report.txt

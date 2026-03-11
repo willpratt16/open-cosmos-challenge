@@ -16,7 +16,7 @@ import logging
 
 from org.orekit.time import AbsoluteDate, TimeScalesFactory
 
-utc = TimeScalesFactory.getUTC() # Get the UTC time scale
+utc = TimeScalesFactory.getUTC()
 BASE_RESULTS_DIR = Path(os.environ.get("OUTPUT_DIR", "/results"))
 logger = logging.getLogger(__name__)
 

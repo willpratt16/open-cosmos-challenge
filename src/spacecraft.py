@@ -41,7 +41,7 @@ class Hardware:
 
                 battery_energy[i] = new_energy
 
-            return battery_energy
+            return power, battery_energy
         
 
 class Spacecraft:

@@ -137,9 +137,9 @@ class Scenario:
             output_dir.mkdir(parents=True, exist_ok=True)
 
             with open(output_dir / "Output_Report.txt", "w") as f:
-                f.write(f"{'time_s':<15}{'illumination_fraction':<25}{'battery_energy_J':<20}\n")
-                for t, illum, energy in zip(self.results[sc_id]['elapsed_timestamps'], self.results[sc_id]['solar_panel_illuminated_fraction'], self.results[sc_id]['battery_energy']):
-                    f.write(f"{t:<15.2f}{illum:<25.4f}{energy:<20.2f}\n")
+                f.write(f"{'time_s':<15}{'illumination_fraction':<25}{'power_output_W':<20}{'battery_energy_J':<20}\n")
+                for t, illum, power, energy in zip(self.results[sc_id]['elapsed_timestamps'], self.results[sc_id]['solar_panel_illuminated_fraction'], self.results[sc_id]['power_output_W'], self.results[sc_id]['battery_energy']):
+                    f.write(f"{t:<15.2f}{illum:<25.4f}{power:<20.2f}{energy:<20.2f}\n")
                 
             if self.results[sc_id]['eclipse_intervals']:
                 with open(output_dir / "Eclipse_Report.txt", "w") as f:
@@ -150,7 +150,7 @@ class Scenario:
 
     def plot_results(self):
 
-        print("Plotting results...")
+        logger.info("Plotting results.")
 
         output_dir = BASE_RESULTS_DIR / self.scenario_name.replace(' ', '_')
         output_dir.mkdir(parents=True, exist_ok=True)
@@ -175,14 +175,14 @@ class Scenario:
                 )
             ax1.plot(
                 self.results[sc_id]['elapsed_timestamps'],
-                self.results[sc_id]['solar_panel_illuminated_fraction'],
+                self.results[sc_id]['power_output_W'],
                 color=color,
                 label=sc_id
             )
 
         ax1.set_xlabel('Elapsed Time (s)')
-        ax1.set_ylabel('Solar Panel Illuminated Fraction')
-        ax1.set_title('Solar Panel Illuminated Fraction Over Time')
+        ax1.set_ylabel('Solar Panel Power Output (W)')
+        ax1.set_title('Solar Panel Power Output Over Time')
 
         for sc_id in self.results.keys():
             ax2.plot(

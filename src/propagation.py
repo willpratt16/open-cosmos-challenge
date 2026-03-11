@@ -113,11 +113,12 @@ class Propagation:
                     self.solar_panel_illuminated_fraction[j] = 0.0
 
         
-        battery_energy = self.spacecraft.hardware.get_solar_panel_energy_output(self.solar_irradiance, self.solar_panel_illuminated_fraction, dt=60.0)
+        power, battery_energy = self.spacecraft.hardware.get_solar_panel_energy_output(self.solar_irradiance, self.solar_panel_illuminated_fraction, dt=60.0)
 
         results_dict = {
             "elapsed_timestamps": elapsed_timestamps,
             "solar_panel_illuminated_fraction": self.solar_panel_illuminated_fraction,
+            "power_output_W": power,
             "eclipse_intervals": eclipse_intervals,
             "battery_energy": battery_energy
         }

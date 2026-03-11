@@ -41,7 +41,6 @@ open-cosmos-challenge/
 ├── results/                      # Simulation outputs appear here
 │
 ├── Dockerfile
-├── entrypoint.sh
 ├── environment.yml
 └── .gitignore
 ```
